@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Employee Manager</title>
+{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src ="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src ="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+<body>
+
+<center><h1>Employee Management System</h1></center></br>
+<center><h2>Employees</h2></center>
+
+
+<!-- search by name -->
+<form class="form-inline" method="GET" >
+        {% csrf_token %}
+    <div class="input-group input-focus">
+  <div class="input-group-prepend">
+    <span class="input-group-text bg-white"><i class="fa fa-search"></i></span>
+  </div>
+  <input type="search" placeholder="Search by name part" name="search"   id="txtSearch" class="form-control border-left-0">
+</div>
+
+
+  <button type="submit" class="btn btn-success">Search</button>
+</form>
+
+
+<table class="table table-striped table-bordered table-sm">
+
+    <thead class="thead-dark">
+    <tr>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+        <th>Employee Email</th>
+        <th>Employee Contact</th>
+        <th>Date of Birth</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+{% for employee in employees %}
+    <tr>
+        <td>{{ employee.eid }}</td>
+        <td>{{ employee.ename }}</td>
+        <td>{{ employee.eemail }}</td>
+        <td>{{ employee.econtact }}</td>
+        <td>{{ employee.edob |date:"jS F Y" }}</td>
+        <td>
+            <a href="employee/{{ employee.eid }}"  class="view" title="View" data-toggle="tooltip"><i class="material-icons" style="color:brown">&#xE417;</i></a>
+            <a href="employee/update/{{ employee.eid }}"  class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons" style="color:blue">&#xE254;</i></a>
+
+            <a href="employee/delete/{{ employee.eid }}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons" style="color:red">&#xE872;</i></a>
+        </td>
+
+
+
+    </tr>
+{% empty %}
+<tr align="center" style="color:#FF0000"><td><b>No results to show.</b></td></tr>
+{% endfor %}
+
+    </tbody>
+</table>
+
+<!--Pagination-->
+      <div class="container p-4">
+        <div class="pagination justify-content-center">
+            <span class="step-links">
+              {% if employees.has_previous %}
+                  <a href="?page=1">&laquo; first</a>
+                  <a href="?page={{ employees.previous_page_number }}">previous</a>
+              {% endif %}
+
+                <span class="current">
+                    Page {{ employees.number }} of {{ employees.paginator.num_pages }}
+                </span>
+
+              {% if employees.has_next %}
+                  <a href="?page={{ employees.next_page_number }}">next</a>
+                  <a href="?page={{ employees.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+            </span>
+            </div>
+        </div>
+      <!--end of Pagination-->
+<br>
+<br>
+<center>
+<a href="employee/create" class="btn btn-primary">Add New</a>
+<a href="employees" class="btn btn-success">Show All</a>
+</center>
+
+</body>
+{% block scripting %}
+
+ <script>
+     $(document).ready(function () {
+     $('.dropdown-toggle').dropdown();
+     });
+</script>
+{% endblock %}
+{% endblock content %}
+

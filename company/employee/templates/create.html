@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Create Employee</title>
+{% endblock title %}
+
+{% block content %}
+
+  <script src ="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <div class="container">
+      <form method="POST" class="post-form">
+        {% csrf_token %}
+    <div class="container">
+    <br>
+
+    <div class="form-group row">
+    <label class="col-sm-1 col-form-label"></label>
+    <div class="col-sm-4">
+    <h3>Create New Employee</h3>
+    <h5>Enter New Employee Details</h5>
+    </div>
+  </div>
+
+
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Employee Name:</label>
+    <div class="col-sm-4">
+      {{ form.ename }}
+    </div>
+
+  </div>
+    <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Employee Email:</label>
+    <div class="col-sm-4">
+      {{ form.eemail }}
+    </div>
+  </div>
+
+    <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Employee Contact:</label>
+    <div class="col-sm-4">
+      {{ form.econtact }}
+    </div>
+    </div>
+
+    <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Date of Birth:</label>
+    <div class="col-sm-4">
+      {{ form.edob }}
+        <i class="fa fa-calendar fa-lg"></i>
+    </div>
+    </div>
+
+
+    <div class="form-group row">
+    <label class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-4">
+    <button type="submit" class="btn btn-info">Create</button>
+    <a href="/employees" class="btn btn-info">Cancel</a>
+
+    </div>
+    </div>
+
+    </div>
+
+</form>
+    </div>
+{% block scripting %}
+<script>
+  $( function() {
+    $( "#id_edob" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: '1950:2050',
+      dateFormat: 'yy-mm-dd',
+      defaultDate:"24-09-2019"
+    });
+  } );
+</script>
+
+ <script>
+     $(document).ready(function () {
+     $('.dropdown-toggle').dropdown();
+     });
+</script>
+{% endblock %}
+{% endblock content %}
